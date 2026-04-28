@@ -215,166 +215,62 @@
   </div>
 
   <!-- CALCULADORA KPI INTERACTIVA -->
-  <div class="card">
-    <h2>🛠️ Calculadora de KPI</h2>
-    <p>Esta calculadora permite digitar casos 1–6 y ver de forma automática los principales KPI.</p>
+<div class="card">
+  <h2>🛠️ Calculadora de KPI</h2>
+  <p>Selecciona un caso y presiona el botón para ver los KPI principales.</p>
 
-    <select id="select-caso">
-      <option value="">-- Elige un caso --</option>
-      <option value="caso1">Caso 1 – Crecimiento ineficiente</option>
-      <option value="caso2">Caso 2 – Negocio saludable</option>
-      <option value="caso3">Caso 3 – SEO con bajo ticket</option>
-      <option value="caso4">Caso 4 – Social con baja calidad</option>
-      <option value="caso5">Caso 5 – Marca consolidada</option>
-      <option value="caso6">Caso 6 – Omnicanal presionado</option>
-    </select>
+  <select id="select-caso">
+    <option value="">-- Elige un caso --</option>
+    <option value="caso1">Caso 1 – Crecimiento ineficiente</option>
+    <option value="caso2">Caso 2 – Negocio saludable</option>
+    <option value="caso3">Caso 3 – SEO con bajo ticket</option>
+    <option value="caso4">Caso 4 – Social con baja calidad</option>
+    <option value="caso5">Caso 5 – Marca consolidada</option>
+    <option value="caso6">Caso 6 – Omnicanal presionado</option>
+  </select>
 
-    <div id="inputs-container" style="margin: 16px 0;"></div>
-    <button id="btn-calcular" class="btn">Calcular KPI</button>
-    <div id="resultados" style="margin: 20px 0; padding: 12px; border-radius: 6px; background: #f0f5ff;"></div>
+  <br><br>
+  <button id="btn-calcular" class="btn">Calcular KPI</button>
 
-    <script>
-      const casos = {
-        caso1: {
-          nombre: "Caso 1 – Crecimiento ineficiente",
-          sesiones: 18000,
-          pedidos: 216,
-          ingresos: 14500000,
-          gasto_marketing: 5200000,
-          clientes_nuevos: 190,
-          clientes_recurrentes: 26,
-          frecuencia_anual: 1.8,
-          vida_cliente: 1.4,
-          abandono_carrito: 78,
-          rebote: 71
-        },
-        caso2: {
-          nombre: "Caso 2 – Negocio saludable",
-          sesiones: 9500,
-          pedidos: 305,
-          ingresos: 28600000,
-          gasto_marketing: 2400000,
-          clientes_nuevos: 120,
-          clientes_recurrentes: 265,
-          frecuencia_anual: 3.1,
-          vida_cliente: 2.6,
-          abandono_carrito: 49,
-          rebote: 39
-        },
-        caso3: {
-          nombre: "Caso 3 – SEO con bajo ticket",
-          sesiones: 22000,
-          pedidos: 352,
-          ingresos: 17600000,
-          gasto_marketing: 1500000,
-          clientes_nuevos: 160,
-          clientes_recurrentes: 110,
-          frecuencia_anual: 2.7,
-          vida_cliente: 2.1,
-          abandono_carrito: 58,
-          rebote: 46
-        },
-        caso4: {
-          nombre: "Caso 4 – Social con baja calidad",
-          sesiones: 26000,
-          pedidos: 182,
-          ingresos: 12800000,
-          gasto_marketing: 4100000,
-          clientes_nuevos: 175,
-          clientes_recurrentes: 22,
-          frecuencia_anual: 1.5,
-          vida_cliente: 1.2,
-          abandono_carrito: 81,
-          rebote: 74
-        },
-        caso5: {
-          nombre: "Caso 5 – Marca consolidada",
-          sesiones: 11000,
-          pedidos: 338,
-          ingresos: 31200000,
-          gasto_marketing: 2800000,
-          clientes_nuevos: 105,
-          clientes_recurrentes: 140,
-          frecuencia_anual: 3.6,
-          vida_cliente: 3.0,
-          abandono_carrito: 42,
-          rebote: 34
-        },
-        caso6: {
-          nombre: "Caso 6 – Omnicanal presionado",
-          sesiones: 15000,
-          pedidos: 255,
-          ingresos: 18900000,
-          gasto_marketing: 4700000,
-          clientes_nuevos: 210,
-          clientes_recurrentes: 45,
-          frecuencia_anual: 2.0,
-          vida_cliente: 1.8,
-          abandono_carrito: 69,
-          rebote: 63
-        }
-      };
+  <div id="resultados" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
+</div>
 
-      const inputsContainer = document.getElementById("inputs-container");
-      const btnCalcular = document.getElementById("btn-calcular");
-      const resultadosDiv = document.getElementById("resultados");
-      const select = document.getElementById("select-caso");
+<script>
+const casos = {
+  caso1: { nombre: "Caso 1 – Crecimiento ineficiente", sesiones: 18000, pedidos: 216, ingresos: 14500000, gasto: 5200000, nuevos: 190, recurrentes: 26, frecuencia: 1.8, vida: 1.4 },
+  caso2: { nombre: "Caso 2 – Negocio saludable", sesiones: 9500, pedidos: 305, ingresos: 28600000, gasto: 2400000, nuevos: 120, recurrentes: 95, frecuencia: 3.1, vida: 2.6 },
+  caso3: { nombre: "Caso 3 – SEO con bajo ticket", sesiones: 22000, pedidos: 352, ingresos: 17600000, gasto: 1500000, nuevos: 160, recurrentes: 110, frecuencia: 2.7, vida: 2.1 },
+  caso4: { nombre: "Caso 4 – Social con baja calidad", sesiones: 26000, pedidos: 182, ingresos: 12800000, gasto: 4100000, nuevos: 175, recurrentes: 22, frecuencia: 1.5, vida: 1.2 },
+  caso5: { nombre: "Caso 5 – Marca consolidada", sesiones: 11000, pedidos: 338, ingresos: 31200000, gasto: 2800000, nuevos: 105, recurrentes: 140, frecuencia: 3.6, vida: 3.0 },
+  caso6: { nombre: "Caso 6 – Omnicanal presionado", sesiones: 15000, pedidos: 255, ingresos: 18900000, gasto: 4700000, nuevos: 210, recurrentes: 45, frecuencia: 2.0, vida: 1.8 }
+};
 
-      select.addEventListener("change", () => {
-        inputsContainer.innerHTML = "";
-        const key = select.value;
-        if (!key) return;
+document.getElementById("btn-calcular").addEventListener("click", function() {
+  const casoSeleccionado = document.getElementById("select-caso").value;
+  const resultados = document.getElementById("resultados");
 
-        const data = casos[key];
-        const inputsHtml = `
-          <p><strong>Caso seleccionado: ${data.nombre}</strong></p>
-          <p>
-            <label>Sesiones: <input type="number" id="sesiones" value="${data.sesiones}" style="width: 100px;"></label>
-            <label>Pedidos: <input type="number" id="pedidos" value="${data.pedidos}" style="width: 100px;"></label>
-            <label>Ingresos COP: <input type="number" id="ingresos" value="${data.ingresos}" style="width: 120px;"></label>
-          </p>
-          <p>
-            <label>Gasto marketing COP: <input type="number" id="gasto_marketing" value="${data.gasto_marketing}" style="width: 120px;"></label>
-            <label>Clientes nuevos: <input type="number" id="clientes_nuevos" value="${data.clientes_nuevos}" style="width: 100px;"></label>
-          </p>
-          <p>
-            <label>Clientes recurrentes: <input type="number" id="clientes_recurrentes" value="${data.clientes_recurrentes}" style="width: 100px;"></label>
-            <label>Frecuencia anual: <input type="number" id="frecuencia_anual" value="${data.frecuencia_anual}" step="0.1" style="width: 80px;"></label>
-            <label>Vida cliente (años): <input type="number" id="vida_cliente" value="${data.vida_cliente}" step="0.1" style="width: 80px;"></label>
-          </p>
-        `;
-        inputsContainer.innerHTML = inputsHtml;
-      });
+  if (!casoSeleccionado) {
+    resultados.innerHTML = "<p>⚠️ Debes seleccionar un caso.</p>";
+    return;
+  }
 
-      btnCalcular.addEventListener("click", () => {
-        const key = select.value;
-        if (!key) {
-          resultadosDiv.innerHTML = "<p>⚠️ Selecciona primero un caso.</p>";
-          return;
-        }
+  const c = casos[casoSeleccionado];
 
-        const s = parseFloat(document.getElementById("sesiones").value);
-        const p = parseFloat(document.getElementById("pedidos").value);
-        const ing = parseFloat(document.getElementById("ingresos").value);
-        const gasto = parseFloat(document.getElementById("gasto_marketing").value);
-        const cn = parseFloat(document.getElementById("clientes_nuevos").value);
-        const cr = parseFloat(document.getElementById("clientes_recurrentes").value);
-        const fa = parseFloat(document.getElementById("frecuencia_anual").value);
-        const vl = parseFloat(document.getElementById("vida_cliente").value);
+  const cr = (c.pedidos / c.sesiones) * 100;
+  const aov = c.ingresos / c.pedidos;
+  const cac = c.gasto / c.nuevos;
+  const cltv = aov * c.frecuencia * c.vida;
+  const rps = c.ingresos / c.sesiones;
+  const rr = (c.recurrentes / c.pedidos) * 100;
 
-        if (!s || !p || !ing || !gasto || !cn) {
-          resultadosDiv.innerHTML = "<p>⚠️ Completa todos los campos numéricos.</p>";
-          return;
-        }
-
-        const cr_kpi = p / s;
-        const aov_kpi = ing / p;
-        const cac_kpi = gasto / cn;
-        const cltv_kpi = aov_kpi * fa * vl;
-        const rps_kpi = ing / s;
-        const rr_kpi = cr / p;
-
-        resultadosDiv.innerHTML = `
-          <h3>📈 Resultados para el caso: ${casos[key].nombre}</h3>
-          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-            <tr><td><strong>CR (Conversion Rate)</strong></td><td>${cr_kpi.toFixed(4)} (${(cr_kpi*100).toFixed(2)}%)</td></
+  resultados.innerHTML = `
+    <h3>${c.nombre}</h3>
+    <p><strong>CR</strong> (Conversion Rate): ${cr.toFixed(2)}%</p>
+    <p><strong>AOV</strong> (Average Order Value): $${aov.toFixed(2)}</p>
+    <p><strong>CAC</strong> (Customer Acquisition Cost): $${cac.toFixed(2)}</p>
+    <p><strong>CLTV</strong> (Customer Lifetime Value): $${cltv.toFixed(2)}</p>
+    <p><strong>RPS</strong> (Revenue per Session): $${rps.toFixed(2)}</p>
+    <p><strong>RR</strong> (Repeat Rate): ${rr.toFixed(2)}%</p>
+  `;
+});
+</script>
