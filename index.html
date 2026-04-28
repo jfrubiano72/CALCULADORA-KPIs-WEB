@@ -230,6 +230,13 @@
   <button id="btn-calcular" class="btn" type="button">Calcular KPI</button>
 
   <div id="resultados" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
+
+  <p style="margin-top:16px;">
+    <strong>¿Qué significa este resultado?</strong><br>
+    La calculadora muestra los KPI procesados del caso seleccionado.
+    Estos datos sirven como base para el análisis, pero no reemplazan la interpretación del estudiante.
+    Tu tarea es explicar qué significan, identificar alertas y proponer decisiones estratégicas.
+  </p>
 </div>
 
 <script>
@@ -247,11 +254,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const select = document.getElementById("select-caso");
   const resultados = document.getElementById("resultados");
 
-  if (!btn || !select || !resultados) {
-    console.error("Faltan elementos HTML de la calculadora.");
-    return;
-  }
-
   btn.addEventListener("click", () => {
     const key = select.value;
 
@@ -261,10 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const c = casos[key];
-    if (!c) {
-      resultados.innerHTML = "<p>⚠️ No se encontró información para este caso.</p>";
-      return;
-    }
 
     const cr = (c.pedidos / c.sesiones) * 100;
     const aov = c.ingresos / c.pedidos;
@@ -285,5 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 </body>
 </html>
