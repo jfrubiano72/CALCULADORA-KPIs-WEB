@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorio KPI E-commerce</title>
+  <style>
+    :root {
+      --primary: #1b4b66;
+      --primary-light: #2e6b8a;
+      --bg: #f8f9fa;
+      --text: #212529;
+      --border: #dee2e6;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+    }
+    h1, h2, h3 {
+      color: var(--primary);
+      margin-top: 1.4em;
+      margin-bottom: 0.6em;
+    }
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 20px;
+      margin: 4px 0;
+      border-radius: 6px;
+      text-decoration: none;
+      color: white;
+      background: var(--primary);
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .btn:hover {
+      background: var(--primary-light);
+      text-decoration: none;
+    }
+    .btn-block {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .siglas-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+    .siglas-table th, .siglas-table td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .siglas-table th {
+      background: #eef2f5;
+      font-weight: 600;
+    }
+    .instructions ol {
+      margin-left: 18px;
+    }
+    .instructions li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🚧 Laboratorio: KPI de e‑commerce y marketing digital</h1>
+
+  <div class="card">
+    <h2>Portada de la actividad</h2>
+    <p>En este laboratorio, trabajarás con KPI clave de e‑commerce, usando sus siglas en inglés y su nombre en español. Usarás datos de casos reales, calcularás indicadores y luego usarás esta calculadora interactiva.</p>
+    <p>Esta página es el punto de entrada para toda la actividad.</p>
+  </div>
+
+  <!-- BOTONES PRINCIPALES -->
+  <div class="card">
+    <h2>Accede a los materiales</h2>
+    <p>Para esta actividad usarás:</p>
+    <ul>
+      <li> <strong>Google Sheet</strong>: guía de siglas, casos, plantilla y rúbrica. </li>
+      <li> <strong>Google Drive</strong>: carpeta del curso y entregas. </li>
+      <li> <strong>GitHub</strong>: repositorio con el código de la calculadora. </li>
+    </ul>
+
+    <div class="grid-2">
+      <a href="PEGAR_AQUI_URL_GOOGLE_SHEET"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="btn btn-block">
+        📊 Abrir Google Sheet (guía y casos)
+      </a>
+      <a href="PEGAR_AQUI_URL_DRIVE"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="btn btn-block">
+        📁 Abrir carpeta de Google Drive
+      </a>
+      <a href="PEGAR_AQUI_URL_REPOSITORIO"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="btn btn-block">
+        🖥️ Ver repositorio en GitHub
+      </a>
+    </div>
+  </div>
+
+  <!-- GUÍA DE SIGLAS EN INGLÉS -->
+  <div class="card">
+    <h2>📌 KPI clave: siglas y su nombre en inglés</h2>
+    <p>A continuación, las siglas de KPI más usadas en e‑commerce y sus nombres en inglés, para que los estudiantes las vayan apropiando desde el inicio.</p>
+
+    <table class="siglas-table">
+      <thead>
+        <tr>
+          <th>Sigla</th>
+          <th>Nombre en inglés</th>
+          <th>Nombre en español</th>
+          <th>Qué representa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>CR</strong></td>
+          <td>Conversion Rate</td>
+          <td>Tasa de conversión</td>
+          <td>Porcentaje de sesiones que terminan en pedido.</td>
+        </tr>
+        <tr>
+          <td><strong>AOV</strong></td>
+          <td>Average Order Value</td>
+          <td>Valor promedio del pedido</td>
+          <td>Valor promedio de cada compra.</td>
+        </tr>
+        <tr>
+          <td><strong>CAC</strong></td>
+          <td>Customer Acquisition Cost</td>
+          <td>Costo de adquisición de cliente</td>
+          <td>Costo promedio por cada cliente nuevo.</td>
+        </tr>
+        <tr>
+          <td><strong>CLTV</strong></td>
+          <td>Customer Lifetime Value</td>
+          <td>Valor del ciclo de vida del cliente</td>
+          <td>Valor total esperado por cliente durante su relación.</td>
+        </tr>
+        <tr>
+          <td><strong>BR</strong></td>
+          <td>Bounce Rate</td>
+          <td>Tasa de rebote</td>
+          <td>Proporción de visitas con abandono muy temprano.</td>
+        </tr>
+        <tr>
+          <td><strong>CAR</strong></td>
+          <td>Cart Abandonment Rate</td>
+          <td>Tasa de abandono de carrito</td>
+          <td>Porcentaje de carritos iniciados que no se completan.</td>
+        </tr>
+        <tr>
+          <td><strong>RPS</strong></td>
+          <td>Revenue per Session</td>
+          <td>Ingreso por sesión</td>
+          <td>Ingreso promedio generado por cada sesión.</td>
+        </tr>
+        <tr>
+          <td><strong>RR</strong></td>
+          <td>Repeat Rate</td>
+          <td>Tasa de recompra</td>
+          <td>Proporción de clientes que vuelven a comprar.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INSTRUCCIONES PARA EL LABORATORIO -->
+  <div class="card">
+    <h2>📘 Instrucciones de uso</h2>
+    <div class="instructions">
+      <ol>
+        <li>
+          <strong>Leer la guía de KPI en Google Sheets.</strong><br>
+          Familiarízate con las siglas en inglés (CR, AOV, CAC, CLTV, etc.).
+        </li>
+        <li>
+          <strong>Elegir un caso de e‑commerce</strong> (Caso 1, 2, 3, 4, 5 o 6).
+        </li>
+        <li>
+          <strong>Extraer los datos base</strong> (sesiones, pedidos, ingresos, CAC, clientes nuevos, etc.).
+        </li>
+        <li>
+          <strong>Calcular los KPI</strong> usando la plantilla “Extracción de KPI”.
+        </li>
+        <li>
+          <strong>Ingresar los datos en esta calculadora</strong> y observar el diagnóstico.
+        </li>
+        <li>
+          <strong>Proponer 3 acciones</strong>: una de adquisición, una de conversión onsite y una de fidelización.
+        </li>
+        <li>
+          <strong>Entregar el diagnóstico en Google Drive</strong> siguiendo el formato de la rúbrica.
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- CALCULADORA KPI INTERACTIVA -->
+  <div class="card">
+    <h2>🛠️ Calculadora de KPI</h2>
+    <p>Esta calculadora permite digitar casos 1–6 y ver de forma automática los principales KPI.</p>
+
+    <select id="select-caso">
+      <option value="">-- Elige un caso --</option>
+      <option value="caso1">Caso 1 – Crecimiento ineficiente</option>
+      <option value="caso2">Caso 2 – Negocio saludable</option>
+      <option value="caso3">Caso 3 – SEO con bajo ticket</option>
+      <option value="caso4">Caso 4 – Social con baja calidad</option>
+      <option value="caso5">Caso 5 – Marca consolidada</option>
+      <option value="caso6">Caso 6 – Omnicanal presionado</option>
+    </select>
+
+    <div id="inputs-container" style="margin: 16px 0;"></div>
+    <button id="btn-calcular" class="btn">Calcular KPI</button>
+    <div id="resultados" style="margin: 20px 0; padding: 12px; border-radius: 6px; background: #f0f5ff;"></div>
+
+    <script>
+      const casos = {
+        caso1: {
+          nombre: "Caso 1 – Crecimiento ineficiente",
+          sesiones: 18000,
+          pedidos: 216,
+          ingresos: 14500000,
+          gasto_marketing: 5200000,
+          clientes_nuevos: 190,
+          clientes_recurrentes: 26,
+          frecuencia_anual: 1.8,
+          vida_cliente: 1.4,
+          abandono_carrito: 78,
+          rebote: 71
+        },
+        caso2: {
+          nombre: "Caso 2 – Negocio saludable",
+          sesiones: 9500,
+          pedidos: 305,
+          ingresos: 28600000,
+          gasto_marketing: 2400000,
+          clientes_nuevos: 120,
+          clientes_recurrentes: 265,
+          frecuencia_anual: 3.1,
+          vida_cliente: 2.6,
+          abandono_carrito: 49,
+          rebote: 39
+        },
+        caso3: {
+          nombre: "Caso 3 – SEO con bajo ticket",
+          sesiones: 22000,
+          pedidos: 352,
+          ingresos: 17600000,
+          gasto_marketing: 1500000,
+          clientes_nuevos: 160,
+          clientes_recurrentes: 110,
+          frecuencia_anual: 2.7,
+          vida_cliente: 2.1,
+          abandono_carrito: 58,
+          rebote: 46
+        },
+        caso4: {
+          nombre: "Caso 4 – Social con baja calidad",
+          sesiones: 26000,
+          pedidos: 182,
+          ingresos: 12800000,
+          gasto_marketing: 4100000,
+          clientes_nuevos: 175,
+          clientes_recurrentes: 22,
+          frecuencia_anual: 1.5,
+          vida_cliente: 1.2,
+          abandono_carrito: 81,
+          rebote: 74
+        },
+        caso5: {
+          nombre: "Caso 5 – Marca consolidada",
+          sesiones: 11000,
+          pedidos: 338,
+          ingresos: 31200000,
+          gasto_marketing: 2800000,
+          clientes_nuevos: 105,
+          clientes_recurrentes: 140,
+          frecuencia_anual: 3.6,
+          vida_cliente: 3.0,
+          abandono_carrito: 42,
+          rebote: 34
+        },
+        caso6: {
+          nombre: "Caso 6 – Omnicanal presionado",
+          sesiones: 15000,
+          pedidos: 255,
+          ingresos: 18900000,
+          gasto_marketing: 4700000,
+          clientes_nuevos: 210,
+          clientes_recurrentes: 45,
+          frecuencia_anual: 2.0,
+          vida_cliente: 1.8,
+          abandono_carrito: 69,
+          rebote: 63
+        }
+      };
+
+      const inputsContainer = document.getElementById("inputs-container");
+      const btnCalcular = document.getElementById("btn-calcular");
+      const resultadosDiv = document.getElementById("resultados");
+      const select = document.getElementById("select-caso");
+
+      select.addEventListener("change", () => {
+        inputsContainer.innerHTML = "";
+        const key = select.value;
+        if (!key) return;
+
+        const data = casos[key];
+        const inputsHtml = `
+          <p><strong>Caso seleccionado: ${data.nombre}</strong></p>
+          <p>
+            <label>Sesiones: <input type="number" id="sesiones" value="${data.sesiones}" style="width: 100px;"></label>
+            <label>Pedidos: <input type="number" id="pedidos" value="${data.pedidos}" style="width: 100px;"></label>
+            <label>Ingresos COP: <input type="number" id="ingresos" value="${data.ingresos}" style="width: 120px;"></label>
+          </p>
+          <p>
+            <label>Gasto marketing COP: <input type="number" id="gasto_marketing" value="${data.gasto_marketing}" style="width: 120px;"></label>
+            <label>Clientes nuevos: <input type="number" id="clientes_nuevos" value="${data.clientes_nuevos}" style="width: 100px;"></label>
+          </p>
+          <p>
+            <label>Clientes recurrentes: <input type="number" id="clientes_recurrentes" value="${data.clientes_recurrentes}" style="width: 100px;"></label>
+            <label>Frecuencia anual: <input type="number" id="frecuencia_anual" value="${data.frecuencia_anual}" step="0.1" style="width: 80px;"></label>
+            <label>Vida cliente (años): <input type="number" id="vida_cliente" value="${data.vida_cliente}" step="0.1" style="width: 80px;"></label>
+          </p>
+        `;
+        inputsContainer.innerHTML = inputsHtml;
+      });
+
+      btnCalcular.addEventListener("click", () => {
+        const key = select.value;
+        if (!key) {
+          resultadosDiv.innerHTML = "<p>⚠️ Selecciona primero un caso.</p>";
+          return;
+        }
+
+        const s = parseFloat(document.getElementById("sesiones").value);
+        const p = parseFloat(document.getElementById("pedidos").value);
+        const ing = parseFloat(document.getElementById("ingresos").value);
+        const gasto = parseFloat(document.getElementById("gasto_marketing").value);
+        const cn = parseFloat(document.getElementById("clientes_nuevos").value);
+        const cr = parseFloat(document.getElementById("clientes_recurrentes").value);
+        const fa = parseFloat(document.getElementById("frecuencia_anual").value);
+        const vl = parseFloat(document.getElementById("vida_cliente").value);
+
+        if (!s || !p || !ing || !gasto || !cn) {
+          resultadosDiv.innerHTML = "<p>⚠️ Completa todos los campos numéricos.</p>";
+          return;
+        }
+
+        const cr_kpi = p / s;
+        const aov_kpi = ing / p;
+        const cac_kpi = gasto / cn;
+        const cltv_kpi = aov_kpi * fa * vl;
+        const rps_kpi = ing / s;
+        const rr_kpi = cr / p;
+
+        resultadosDiv.innerHTML = `
+          <h3>📈 Resultados para el caso: ${casos[key].nombre}</h3>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <tr><td><strong>CR (Conversion Rate)</strong></td><td>${cr_kpi.toFixed(4)} (${(cr_kpi*100).toFixed(2)}%)</td></
