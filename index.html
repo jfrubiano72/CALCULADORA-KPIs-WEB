@@ -211,12 +211,25 @@
     </div>
   </div>
 
-<!-- CALCULADORA MANUAL DE KPI -->
+<!-- CALCULADORA GUIADA DE KPI -->
 <div class="card">
-  <h2>🧮 Calculadora manual de KPI</h2>
-  <p>Ingresa los datos base del caso para calcular automáticamente los KPI principales.</p>
+  <h2>🧮 Calculadora guiada de KPI</h2>
+  <p>Selecciona primero el KPI que quieres calcular. La herramienta te mostrará qué variables necesitas para entender de dónde sale cada indicador.</p>
 
-  <div class="grid-2">
+  <label for="kpi-selector"><strong>Selecciona el KPI</strong></label><br>
+  <select id="kpi-selector" style="margin-top:8px; padding:10px; width:100%; max-width:420px;">
+    <option value="">-- Elige un KPI --</option>
+    <option value="cr">CR - Conversion Rate</option>
+    <option value="aov">AOV - Average Order Value</option>
+    <option value="cac">CAC - Customer Acquisition Cost</option>
+    <option value="cltv">CLTV - Customer Lifetime Value</option>
+    <option value="rps">RPS - Revenue per Session</option>
+    <option value="rr">RR - Repeat Rate</option>
+  </select>
+
+  <div id="kpi-info" style="margin-top:16px; padding:14px; background:#f4f7fb; border-radius:8px; display:none;"></div>
+
+  <div class="grid-2" style="margin-top:18px;">
     <div>
       <label for="sesiones"><strong>Sesiones</strong></label><br>
       <input id="sesiones" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
@@ -259,20 +272,20 @@
   </div>
 
   <br>
-  <button id="btn-calcular-manual" class="btn" type="button">Calcular KPI</button>
+  <button id="btn-calcular-guiado" class="btn" type="button">Calcular KPI seleccionado</button>
 
-  <div id="resultados-manual" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
+  <div id="resultado-guiado" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
 
   <p style="margin-top:16px;">
-    <strong>¿Qué debes hacer con estos resultados?</strong><br>
-    Usa estos KPI como base para interpretar el caso. No copies los valores como respuesta final: explica qué significan, identifica problemas y propone acciones estratégicas.
+    <strong>¿Qué debes hacer con este resultado?</strong><br>
+    No copies el valor como respuesta final. Explica qué significa, interpreta si el resultado es favorable o preocupante y relaciónalo con decisiones estratégicas.
   </p>
 </div>
 
 <!-- VERIFICACIÓN CON CASO GUÍA -->
 <div class="card">
   <h2>✅ Verificación con caso guía</h2>
-  <p>Después de calcular manualmente los KPI, usa esta sección para comprobar tus resultados con el caso seleccionado.</p>
+  <p>Después de calcular el KPI manualmente, usa esta sección para comprobar tus resultados con un caso de referencia.</p>
 
   <select id="select-caso">
     <option value="">-- Elige un caso --</option>
@@ -301,64 +314,111 @@ document.addEventListener("DOMContentLoaded", () => {
     caso6: { nombre: "Caso 6 – Omnicanal presionado", sesiones: 15000, pedidos: 255, ingresos: 18900000, gasto: 4700000, nuevos: 210, recurrentes: 45, frecuencia: 2.0, vida: 1.8 }
   };
 
-  function renderResultados(destino, titulo, c) {
-    const cr = (c.pedidos / c.sesiones) * 100;
-    const aov = c.ingresos / c.pedidos;
-    const cac = c.gasto / c.nuevos;
-    const cltv = aov * c.frecuencia * c.vida;
-    const rps = c.ingresos / c.sesiones;
-    const rr = (c.recurrentes / c.pedidos) * 100;
+  const kpiData = {
+    cr: {
+      nombre: "CR - Conversion Rate",
+      formula: "CR = (Pedidos / Sesiones) × 100",
+      variables: ["pedidos", "sesiones"],
+      ayuda: "Para calcular CR necesitas Pedidos y Sesiones. Este KPI muestra qué porcentaje del tráfico termina comprando."
+    },
+    aov: {
+      nombre: "AOV - Average Order Value",
+      formula: "AOV = Ingresos / Pedidos",
+      variables: ["ingresos", "pedidos"],
+      ayuda: "Para calcular AOV necesitas Ingresos y Pedidos. Este KPI muestra el valor promedio de cada compra."
+    },
+    cac: {
+      nombre: "CAC - Customer Acquisition Cost",
+      formula: "CAC = Gasto en marketing / Clientes nuevos",
+      variables: ["gasto", "nuevos"],
+      ayuda: "Para calcular CAC necesitas Gasto en marketing y Clientes nuevos. Este KPI indica cuánto cuesta adquirir un cliente."
+    },
+    cltv: {
+      nombre: "CLTV - Customer Lifetime Value",
+      formula: "CLTV = AOV × Frecuencia de compra × Vida útil del cliente",
+      variables: ["ingresos", "pedidos", "frecuencia", "vida"],
+      ayuda: "Para calcular CLTV necesitas primero AOV, que sale de Ingresos / Pedidos, y luego multiplicarlo por Frecuencia de compra y Vida útil del cliente."
+    },
+    rps: {
+      nombre: "RPS - Revenue per Session",
+      formula: "RPS = Ingresos / Sesiones",
+      variables: ["ingresos", "sesiones"],
+      ayuda: "Para calcular RPS necesitas Ingresos y Sesiones. Este KPI muestra cuánto ingreso produce cada sesión."
+    },
+    rr: {
+      nombre: "RR - Repeat Rate",
+      formula: "RR = (Clientes recurrentes / Pedidos) × 100",
+      variables: ["recurrentes", "pedidos"],
+      ayuda: "Para calcular RR necesitas Clientes recurrentes y Pedidos. Este KPI indica el peso de la recompra."
+    }
+  };
 
-    destino.innerHTML = `
-      <h3>${titulo}</h3>
-      <p><strong>CR</strong> (Conversion Rate): ${cr.toFixed(2)}%</p>
-      <p><strong>AOV</strong> (Average Order Value): $${aov.toFixed(2)}</p>
-      <p><strong>CAC</strong> (Customer Acquisition Cost): $${cac.toFixed(2)}</p>
-      <p><strong>CLTV</strong> (Customer Lifetime Value): $${cltv.toFixed(2)}</p>
-      <p><strong>RPS</strong> (Revenue per Session): $${rps.toFixed(2)}</p>
-      <p><strong>RR</strong> (Repeat Rate): ${rr.toFixed(2)}%</p>
-    `;
+  function obtenerValor(id) {
+    return parseFloat(document.getElementById(id).value);
   }
 
-  const btnManual = document.getElementById("btn-calcular-manual");
-  const resultadosManual = document.getElementById("resultados-manual");
-
-  btnManual.addEventListener("click", () => {
-    const sesiones = parseFloat(document.getElementById("sesiones").value);
-    const pedidos = parseFloat(document.getElementById("pedidos").value);
-    const ingresos = parseFloat(document.getElementById("ingresos").value);
-    const gasto = parseFloat(document.getElementById("gasto").value);
-    const nuevos = parseFloat(document.getElementById("nuevos").value);
-    const recurrentes = parseFloat(document.getElementById("recurrentes").value);
-    const frecuencia = parseFloat(document.getElementById("frecuencia").value);
-    const vida = parseFloat(document.getElementById("vida").value);
-
-    if ([sesiones, pedidos, ingresos, gasto, nuevos, recurrentes, frecuencia, vida].some(v => isNaN(v) || v <= 0)) {
-      resultadosManual.innerHTML = "<p>⚠️ Debes completar todos los campos con valores mayores que cero.</p>";
-      return;
-    }
-
-    renderResultados(resultadosManual, "Resultados calculados manualmente", {
-      sesiones, pedidos, ingresos, gasto, nuevos, recurrentes, frecuencia, vida
+  function ocultarTodosLosCampos() {
+    const ids = ["sesiones","pedidos","ingresos","gasto","nuevos","recurrentes","frecuencia","vida"];
+    ids.forEach(id => {
+      const input = document.getElementById(id);
+      input.parentElement.style.opacity = "0.35";
+      input.parentElement.style.pointerEvents = "none";
+      input.style.background = "#f3f3f3";
     });
-  });
+  }
 
-  const btn = document.getElementById("btn-calcular");
-  const select = document.getElementById("select-caso");
-  const resultados = document.getElementById("resultados");
+  function mostrarCamposNecesarios(variables) {
+    variables.forEach(id => {
+      const input = document.getElementById(id);
+      input.parentElement.style.opacity = "1";
+      input.parentElement.style.pointerEvents = "auto";
+      input.style.background = "#ffffff";
+    });
+  }
 
-  btn.addEventListener("click", () => {
-    const key = select.value;
+  const selector = document.getElementById("kpi-selector");
+  const info = document.getElementById("kpi-info");
+  const resultadoGuiado = document.getElementById("resultado-guiado");
 
-    if (!key) {
-      resultados.innerHTML = "<p>⚠️ Debes seleccionar un caso.</p>";
+  ocultarTodosLosCampos();
+
+  selector.addEventListener("change", () => {
+    const kpi = selector.value;
+    ocultarTodosLosCampos();
+    resultadoGuiado.innerHTML = "";
+
+    if (!kpi) {
+      info.style.display = "none";
       return;
     }
 
-    renderResultados(resultados, casos[key].nombre, casos[key]);
+    const actual = kpiData[kpi];
+    mostrarCamposNecesarios(actual.variables);
+    info.style.display = "block";
+    info.innerHTML = `
+      <p><strong>${actual.nombre}</strong></p>
+      <p><strong>Fórmula:</strong> ${actual.formula}</p>
+      <p>${actual.ayuda}</p>
+    `;
   });
-});
-</script>
+
+  document.getElementById("btn-calcular-guiado").addEventListener("click", () => {
+    const kpi = selector.value;
+
+    if (!kpi) {
+      resultadoGuiado.innerHTML = "<p>⚠️ Primero debes seleccionar un KPI.</p>";
+      return;
+    }
+
+    let valor;
+    let formulaTexto = "";
+    let explicacion = "";
+
+    if (kpi === "cr") {
+      const pedidos = obtenerValor("pedidos");
+      const sesiones = obtenerValor("sesiones");
+      if ([pedidos, sesiones].some(v => isNaN(v) || v <= 0)) {
+        resultadoGuiado.innerHTML = "<p>⚠️ 
 
 </body>
 </html>
