@@ -211,10 +211,68 @@
     </div>
   </div>
 
-  <!-- CALCULADORA KPI INTERACTIVA -->
+<!-- CALCULADORA MANUAL DE KPI -->
 <div class="card">
-  <h2>🛠️ Calculadora de KPI</h2>
-  <p>Selecciona un caso y presiona el botón para ver los KPI principales.</p>
+  <h2>🧮 Calculadora manual de KPI</h2>
+  <p>Ingresa los datos base del caso para calcular automáticamente los KPI principales.</p>
+
+  <div class="grid-2">
+    <div>
+      <label for="sesiones"><strong>Sesiones</strong></label><br>
+      <input id="sesiones" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="pedidos"><strong>Pedidos</strong></label><br>
+      <input id="pedidos" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="ingresos"><strong>Ingresos</strong></label><br>
+      <input id="ingresos" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="gasto"><strong>Gasto en marketing</strong></label><br>
+      <input id="gasto" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="nuevos"><strong>Clientes nuevos</strong></label><br>
+      <input id="nuevos" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="recurrentes"><strong>Clientes recurrentes</strong></label><br>
+      <input id="recurrentes" type="number" min="0" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="frecuencia"><strong>Frecuencia de compra</strong></label><br>
+      <input id="frecuencia" type="number" min="0" step="0.1" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+
+    <div>
+      <label for="vida"><strong>Vida útil del cliente</strong></label><br>
+      <input id="vida" type="number" min="0" step="0.1" style="width:100%; padding:10px; margin-top:6px;">
+    </div>
+  </div>
+
+  <br>
+  <button id="btn-calcular-manual" class="btn" type="button">Calcular KPI</button>
+
+  <div id="resultados-manual" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
+
+  <p style="margin-top:16px;">
+    <strong>¿Qué debes hacer con estos resultados?</strong><br>
+    Usa estos KPI como base para interpretar el caso. No copies los valores como respuesta final: explica qué significan, identifica problemas y propone acciones estratégicas.
+  </p>
+</div>
+
+<!-- VERIFICACIÓN CON CASO GUÍA -->
+<div class="card">
+  <h2>✅ Verificación con caso guía</h2>
+  <p>Después de calcular manualmente los KPI, usa esta sección para comprobar tus resultados con el caso seleccionado.</p>
 
   <select id="select-caso">
     <option value="">-- Elige un caso --</option>
@@ -227,16 +285,9 @@
   </select>
 
   <br><br>
-  <button id="btn-calcular" class="btn" type="button">Calcular KPI</button>
+  <button id="btn-calcular" class="btn" type="button">Verificar caso</button>
 
   <div id="resultados" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
-
-  <p style="margin-top:16px;">
-    <strong>¿Qué significa este resultado?</strong><br>
-    La calculadora muestra los KPI procesados del caso seleccionado.
-    Estos datos sirven como base para el análisis, pero no reemplazan la interpretación del estudiante.
-    Tu tarea es explicar qué significan, identificar alertas y proponer decisiones estratégicas.
-  </p>
 </div>
 
 <script>
@@ -250,6 +301,48 @@ document.addEventListener("DOMContentLoaded", () => {
     caso6: { nombre: "Caso 6 – Omnicanal presionado", sesiones: 15000, pedidos: 255, ingresos: 18900000, gasto: 4700000, nuevos: 210, recurrentes: 45, frecuencia: 2.0, vida: 1.8 }
   };
 
+  function renderResultados(destino, titulo, c) {
+    const cr = (c.pedidos / c.sesiones) * 100;
+    const aov = c.ingresos / c.pedidos;
+    const cac = c.gasto / c.nuevos;
+    const cltv = aov * c.frecuencia * c.vida;
+    const rps = c.ingresos / c.sesiones;
+    const rr = (c.recurrentes / c.pedidos) * 100;
+
+    destino.innerHTML = `
+      <h3>${titulo}</h3>
+      <p><strong>CR</strong> (Conversion Rate): ${cr.toFixed(2)}%</p>
+      <p><strong>AOV</strong> (Average Order Value): $${aov.toFixed(2)}</p>
+      <p><strong>CAC</strong> (Customer Acquisition Cost): $${cac.toFixed(2)}</p>
+      <p><strong>CLTV</strong> (Customer Lifetime Value): $${cltv.toFixed(2)}</p>
+      <p><strong>RPS</strong> (Revenue per Session): $${rps.toFixed(2)}</p>
+      <p><strong>RR</strong> (Repeat Rate): ${rr.toFixed(2)}%</p>
+    `;
+  }
+
+  const btnManual = document.getElementById("btn-calcular-manual");
+  const resultadosManual = document.getElementById("resultados-manual");
+
+  btnManual.addEventListener("click", () => {
+    const sesiones = parseFloat(document.getElementById("sesiones").value);
+    const pedidos = parseFloat(document.getElementById("pedidos").value);
+    const ingresos = parseFloat(document.getElementById("ingresos").value);
+    const gasto = parseFloat(document.getElementById("gasto").value);
+    const nuevos = parseFloat(document.getElementById("nuevos").value);
+    const recurrentes = parseFloat(document.getElementById("recurrentes").value);
+    const frecuencia = parseFloat(document.getElementById("frecuencia").value);
+    const vida = parseFloat(document.getElementById("vida").value);
+
+    if ([sesiones, pedidos, ingresos, gasto, nuevos, recurrentes, frecuencia, vida].some(v => isNaN(v) || v <= 0)) {
+      resultadosManual.innerHTML = "<p>⚠️ Debes completar todos los campos con valores mayores que cero.</p>";
+      return;
+    }
+
+    renderResultados(resultadosManual, "Resultados calculados manualmente", {
+      sesiones, pedidos, ingresos, gasto, nuevos, recurrentes, frecuencia, vida
+    });
+  });
+
   const btn = document.getElementById("btn-calcular");
   const select = document.getElementById("select-caso");
   const resultados = document.getElementById("resultados");
@@ -262,24 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const c = casos[key];
-
-    const cr = (c.pedidos / c.sesiones) * 100;
-    const aov = c.ingresos / c.pedidos;
-    const cac = c.gasto / c.nuevos;
-    const cltv = aov * c.frecuencia * c.vida;
-    const rps = c.ingresos / c.sesiones;
-    const rr = (c.recurrentes / c.pedidos) * 100;
-
-    resultados.innerHTML = `
-      <h3>${c.nombre}</h3>
-      <p><strong>CR</strong> (Conversion Rate): ${cr.toFixed(2)}%</p>
-      <p><strong>AOV</strong> (Average Order Value): $${aov.toFixed(2)}</p>
-      <p><strong>CAC</strong> (Customer Acquisition Cost): $${cac.toFixed(2)}</p>
-      <p><strong>CLTV</strong> (Customer Lifetime Value): $${cltv.toFixed(2)}</p>
-      <p><strong>RPS</strong> (Revenue per Session): $${rps.toFixed(2)}</p>
-      <p><strong>RR</strong> (Repeat Rate): ${rr.toFixed(2)}%</p>
-    `;
+    renderResultados(resultados, casos[key].nombre, casos[key]);
   });
 });
 </script>
