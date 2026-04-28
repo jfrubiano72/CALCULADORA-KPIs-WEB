@@ -230,47 +230,61 @@
   </select>
 
   <br><br>
-  <button id="btn-calcular" class="btn">Calcular KPI</button>
+  <button id="btn-calcular" class="btn" type="button">Calcular KPI</button>
 
   <div id="resultados" style="margin-top:20px; padding:16px; background:#eef4ff; border-radius:8px;"></div>
 </div>
 
 <script>
-const casos = {
-  caso1: { nombre: "Caso 1 – Crecimiento ineficiente", sesiones: 18000, pedidos: 216, ingresos: 14500000, gasto: 5200000, nuevos: 190, recurrentes: 26, frecuencia: 1.8, vida: 1.4 },
-  caso2: { nombre: "Caso 2 – Negocio saludable", sesiones: 9500, pedidos: 305, ingresos: 28600000, gasto: 2400000, nuevos: 120, recurrentes: 95, frecuencia: 3.1, vida: 2.6 },
-  caso3: { nombre: "Caso 3 – SEO con bajo ticket", sesiones: 22000, pedidos: 352, ingresos: 17600000, gasto: 1500000, nuevos: 160, recurrentes: 110, frecuencia: 2.7, vida: 2.1 },
-  caso4: { nombre: "Caso 4 – Social con baja calidad", sesiones: 26000, pedidos: 182, ingresos: 12800000, gasto: 4100000, nuevos: 175, recurrentes: 22, frecuencia: 1.5, vida: 1.2 },
-  caso5: { nombre: "Caso 5 – Marca consolidada", sesiones: 11000, pedidos: 338, ingresos: 31200000, gasto: 2800000, nuevos: 105, recurrentes: 140, frecuencia: 3.6, vida: 3.0 },
-  caso6: { nombre: "Caso 6 – Omnicanal presionado", sesiones: 15000, pedidos: 255, ingresos: 18900000, gasto: 4700000, nuevos: 210, recurrentes: 45, frecuencia: 2.0, vida: 1.8 }
-};
+document.addEventListener("DOMContentLoaded", () => {
+  const casos = {
+    caso1: { nombre: "Caso 1 – Crecimiento ineficiente", sesiones: 18000, pedidos: 216, ingresos: 14500000, gasto: 5200000, nuevos: 190, recurrentes: 26, frecuencia: 1.8, vida: 1.4 },
+    caso2: { nombre: "Caso 2 – Negocio saludable", sesiones: 9500, pedidos: 305, ingresos: 28600000, gasto: 2400000, nuevos: 120, recurrentes: 95, frecuencia: 3.1, vida: 2.6 },
+    caso3: { nombre: "Caso 3 – SEO con bajo ticket", sesiones: 22000, pedidos: 352, ingresos: 17600000, gasto: 1500000, nuevos: 160, recurrentes: 110, frecuencia: 2.7, vida: 2.1 },
+    caso4: { nombre: "Caso 4 – Social con baja calidad", sesiones: 26000, pedidos: 182, ingresos: 12800000, gasto: 4100000, nuevos: 175, recurrentes: 22, frecuencia: 1.5, vida: 1.2 },
+    caso5: { nombre: "Caso 5 – Marca consolidada", sesiones: 11000, pedidos: 338, ingresos: 31200000, gasto: 2800000, nuevos: 105, recurrentes: 140, frecuencia: 3.6, vida: 3.0 },
+    caso6: { nombre: "Caso 6 – Omnicanal presionado", sesiones: 15000, pedidos: 255, ingresos: 18900000, gasto: 4700000, nuevos: 210, recurrentes: 45, frecuencia: 2.0, vida: 1.8 }
+  };
 
-document.getElementById("btn-calcular").addEventListener("click", function() {
-  const casoSeleccionado = document.getElementById("select-caso").value;
+  const btn = document.getElementById("btn-calcular");
+  const select = document.getElementById("select-caso");
   const resultados = document.getElementById("resultados");
 
-  if (!casoSeleccionado) {
-    resultados.innerHTML = "<p>⚠️ Debes seleccionar un caso.</p>";
+  if (!btn || !select || !resultados) {
+    console.error("Faltan elementos HTML de la calculadora.");
     return;
   }
 
-  const c = casos[casoSeleccionado];
+  btn.addEventListener("click", () => {
+    const key = select.value;
 
-  const cr = (c.pedidos / c.sesiones) * 100;
-  const aov = c.ingresos / c.pedidos;
-  const cac = c.gasto / c.nuevos;
-  const cltv = aov * c.frecuencia * c.vida;
-  const rps = c.ingresos / c.sesiones;
-  const rr = (c.recurrentes / c.pedidos) * 100;
+    if (!key) {
+      resultados.innerHTML = "<p>⚠️ Debes seleccionar un caso.</p>";
+      return;
+    }
 
-  resultados.innerHTML = `
-    <h3>${c.nombre}</h3>
-    <p><strong>CR</strong> (Conversion Rate): ${cr.toFixed(2)}%</p>
-    <p><strong>AOV</strong> (Average Order Value): $${aov.toFixed(2)}</p>
-    <p><strong>CAC</strong> (Customer Acquisition Cost): $${cac.toFixed(2)}</p>
-    <p><strong>CLTV</strong> (Customer Lifetime Value): $${cltv.toFixed(2)}</p>
-    <p><strong>RPS</strong> (Revenue per Session): $${rps.toFixed(2)}</p>
-    <p><strong>RR</strong> (Repeat Rate): ${rr.toFixed(2)}%</p>
-  `;
+    const c = casos[key];
+    if (!c) {
+      resultados.innerHTML = "<p>⚠️ No se encontró información para este caso.</p>";
+      return;
+    }
+
+    const cr = (c.pedidos / c.sesiones) * 100;
+    const aov = c.ingresos / c.pedidos;
+    const cac = c.gasto / c.nuevos;
+    const cltv = aov * c.frecuencia * c.vida;
+    const rps = c.ingresos / c.sesiones;
+    const rr = (c.recurrentes / c.pedidos) * 100;
+
+    resultados.innerHTML = `
+      <h3>${c.nombre}</h3>
+      <p><strong>CR</strong> (Conversion Rate): ${cr.toFixed(2)}%</p>
+      <p><strong>AOV</strong> (Average Order Value): $${aov.toFixed(2)}</p>
+      <p><strong>CAC</strong> (Customer Acquisition Cost): $${cac.toFixed(2)}</p>
+      <p><strong>CLTV</strong> (Customer Lifetime Value): $${cltv.toFixed(2)}</p>
+      <p><strong>RPS</strong> (Revenue per Session): $${rps.toFixed(2)}</p>
+      <p><strong>RR</strong> (Repeat Rate): ${rr.toFixed(2)}%</p>
+    `;
+  });
 });
 </script>
